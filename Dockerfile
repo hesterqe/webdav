@@ -28,15 +28,17 @@ RUN echo "DavLockDB $WEB_DAV_LOCK_PATH/DavLock" >> $WEB_DAV_CONFIG && \
     echo "        Require valid-user" >> $WEB_DAV_CONFIG && \
     echo "    </Directory>" >> $WEB_DAV_CONFIG && \
     echo "</VirtualHost>" >> $WEB_DAV_CONFIG && \
-	touch $WEB_DAV_PASSWORD_FILE && \
-	chmod 0755 $WEB_DAV_CONFIG &&\
+    touch $WEB_DAV_PASSWORD_FILE && \
+    chmod 0755 $WEB_DAV_CONFIG && \
     chmod 0755 $WEB_DAV_LOCK_PATH
 	
 # temporary as this should be a pvc volume instead
 RUN mkdir -p $COS_MOUNT && \
     echo "Hello World" >> $COS_MOUNT/test.html && \
     chmod -R 0755 $COS_MOUNT    
-
+# temporary as this should should be controlled via LDAP or AzureAD
+RUN htpasswd -bc /etc/httpd/.htpasswd dev abc123
+    
 USER 1001
 
 # The run script uses standard ways to run the application
