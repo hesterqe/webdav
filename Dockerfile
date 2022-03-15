@@ -13,7 +13,7 @@ RUN /usr/libexec/s2i/assemble
 
 USER 0
 
-RUN mkdir /tmp/src && \
+RUN mkdir -p /tmp/src && \
     chown -R 1001:0 /tmp/src
 
 # create supplemental webdav configuration as WEB_DAV_CONFIG
