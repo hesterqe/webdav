@@ -17,7 +17,7 @@ RUN /usr/libexec/s2i/assemble
 
 # create supplemental webdav configuration as WEB_DAV_CONFIG
 RUN echo "DavLockDB $WEB_DAV_LOCK_PATH/DavLock" >> $WEB_DAV_CONFIG && \
-    echo "<VirtualHost *:80>" >> $WEB_DAV_CONFIG && \
+    echo "<VirtualHost *:8080>" >> $WEB_DAV_CONFIG && \
     echo "    DocumentRoot $COS_MOUNT/" >> $WEB_DAV_CONFIG && \
     echo "    Alias /cos $COS_MOUNT" >> $WEB_DAV_CONFIG && \
     echo "    <Directory $COS_MOUNT>" >> $WEB_DAV_CONFIG && \
