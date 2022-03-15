@@ -13,6 +13,9 @@ RUN /usr/libexec/s2i/assemble
 
 USER 0
 
+RUN mkdir /tmp/src && \
+    chown -R 1001:0 /tmp/src
+
 # create supplemental webdav configuration as WEB_DAV_CONFIG
 RUN echo "DavLockDB $WEB_DAV_LOCK_PATH/DavLock" >> $WEB_DAV_CONFIG && \
     echo "<VirtualHost *:80>" >> $WEB_DAV_CONFIG && \
