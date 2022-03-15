@@ -5,16 +5,15 @@ ARG COS_MOUNT=/var/www/html/cos
 ARG WEB_DAV_LOCK_PATH=/var/www/html
 ARG WEB_DAV_PASSWORD_FILE=/etc/httpd/.htpasswd
 
-# Let the assemble script install the dependencies
-RUN /usr/libexec/s2i/assemble
-
 # /var/www/html has to be writeable by apache to create DavLockDB
 # DavLockDB may need to be made a shared volume with other apache instances
-
 USER 0
 
 RUN mkdir -p /tmp/src && \
     chown -R 1001:0 /tmp/src
+
+# Let the assemble script install the dependencies
+RUN /usr/libexec/s2i/assemble
 
 # create supplemental webdav configuration as WEB_DAV_CONFIG
 RUN echo "DavLockDB $WEB_DAV_LOCK_PATH/DavLock" >> $WEB_DAV_CONFIG && \
