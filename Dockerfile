@@ -1,9 +1,9 @@
 FROM registry.redhat.io/rhel8/httpd-24
 
-ARG WEB_DAV_CONFIG=/etc/httpd/conf.d/webdav.conf \
-    COS_MOUNT=/var/www/html/cos \
-	WEB_DAV_LOCK_PATH=/var/www/html \
-	WEB_DAV_PASSWORD_FILE=/etc/httpd/.htpasswd
+ARG WEB_DAV_CONFIG=/etc/httpd/conf.d/webdav.conf
+ARG COS_MOUNT=/var/www/html/cos
+ARG WEB_DAV_LOCK_PATH=/var/www/html
+ARG WEB_DAV_PASSWORD_FILE=/etc/httpd/.htpasswd
 
 # Let the assemble script install the dependencies
 RUN /usr/libexec/s2i/assemble
