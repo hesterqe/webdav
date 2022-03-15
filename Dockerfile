@@ -33,7 +33,7 @@ RUN echo "DavLockDB $WEB_DAV_LOCK_PATH/DavLock" >> $WEB_DAV_CONFIG && \
     chmod 0755 $WEB_DAV_LOCK_PATH
 	
 # temporary as this should be a pvc volume instead
-RUN mkdir -p COS_MOUNT && \
+RUN mkdir -p $COS_MOUNT && \
     chmod 0755 $COS_MOUNT
 
 USER 1001
