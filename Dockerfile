@@ -32,8 +32,6 @@ RUN echo "DavLockDB $WEB_DAV_LOCK_PATH/DavLock" >> $WEB_DAV_CONFIG && \
     chmod 0755 $WEB_DAV_CONFIG && \
     chmod 0755 $WEB_DAV_LOCK_PATH
 
-RUN sed -i 's/<VirtualHost _default_:8443>/<VirtualHost _default_:8443>\r\nDocumentRoot $COS_MOUNT\/\r\n\t/g' /etc/httpd/conf.d/ssl.conf
-	
 # temporary as this should be a pvc volume instead
 RUN mkdir -p $COS_MOUNT && \
     echo "Hello World" >> $COS_MOUNT/test.html && \
