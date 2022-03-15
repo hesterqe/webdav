@@ -1,6 +1,6 @@
 FROM registry.redhat.io/rhel8/httpd-24
 
-ARG WEB_DAV_CONFIG=/etc/httpd/conf.d/webdav.conf
+ARG WEB_DAV_CONFIG=/tmp/src/httpd-cfg
 ARG COS_MOUNT=/var/www/html/cos
 ARG WEB_DAV_LOCK_PATH=/var/www/html
 ARG WEB_DAV_PASSWORD_FILE=/etc/httpd/.htpasswd
@@ -10,13 +10,9 @@ ARG WEB_DAV_PASSWORD_FILE=/etc/httpd/.htpasswd
 USER 0
 
 RUN mkdir -p /tmp/src && \
-    chown -R 1001:0 /tmp/src
-
-# Let the assemble script install the dependencies
-RUN /usr/libexec/s2i/assemble
-
+    mkdir -p WEB_DAV_CONFIG && \
 # create supplemental webdav configuration as WEB_DAV_CONFIG
-RUN echo "DavLockDB $WEB_DAV_LOCK_PATH/DavLock" >> $WEB_DAV_CONFIG && \
+    echo "DavLockDB $WEB_DAV_LOCK_PATH/DavLock" >> $WEB_DAV_CONFIG && \
     echo "<VirtualHost *:8443>" >> $WEB_DAV_CONFIG && \
     echo "    DocumentRoot $COS_MOUNT/" >> $WEB_DAV_CONFIG && \
     echo "    Alias /cos $COS_MOUNT" >> $WEB_DAV_CONFIG && \
@@ -27,10 +23,13 @@ RUN echo "DavLockDB $WEB_DAV_LOCK_PATH/DavLock" >> $WEB_DAV_CONFIG && \
     echo "        AuthUserFile $WEB_DAV_PASSWORD_FILE" >> $WEB_DAV_CONFIG && \
     echo "        Require valid-user" >> $WEB_DAV_CONFIG && \
     echo "    </Directory>" >> $WEB_DAV_CONFIG && \
-    echo "</VirtualHost>" >> $WEB_DAV_CONFIG && \
+    echo "</VirtualHost>" >> $WEB_DAV_CONFIG && \    
+    chown -R 1001:0 /tmp/src && \
     touch $WEB_DAV_PASSWORD_FILE && \
-    chmod 0755 $WEB_DAV_CONFIG && \
     chmod 0755 $WEB_DAV_LOCK_PATH
+
+# Let the assemble script install the dependencies
+RUN /usr/libexec/s2i/assemble
 
 # temporary as this should be a pvc volume instead
 RUN mkdir -p $COS_MOUNT && \
