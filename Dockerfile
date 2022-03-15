@@ -1,7 +1,7 @@
 FROM registry.redhat.io/rhel8/httpd-24
 
 ARG WEB_DAV_CONFIG=/etc/httpd/conf.d/webdav.conf
-ARG COS_MOUNT=/var/www/html/cos
+ARG COS_MOUNT=/opt/app-root/src/cos
 ARG WEB_DAV_LOCK_PATH=/var/www/html
 ARG WEB_DAV_PASSWORD_FILE=/etc/httpd/.htpasswd
 
