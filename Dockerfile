@@ -17,7 +17,7 @@ RUN /usr/libexec/s2i/assemble
 
 # create supplemental webdav configuration as WEB_DAV_CONFIG
 RUN echo "DavLockDB $WEB_DAV_LOCK_PATH/DavLock" >> $WEB_DAV_CONFIG && \
-    echo "<VirtualHost _default_:8443>" >> $WEB_DAV_CONFIG && \
+    echo "<VirtualHost *:8443>" >> $WEB_DAV_CONFIG && \
     echo "    DocumentRoot $COS_MOUNT/" >> $WEB_DAV_CONFIG && \
     echo "    Alias /cos $COS_MOUNT" >> $WEB_DAV_CONFIG && \
     echo "    <Directory $COS_MOUNT>" >> $WEB_DAV_CONFIG && \
@@ -31,6 +31,8 @@ RUN echo "DavLockDB $WEB_DAV_LOCK_PATH/DavLock" >> $WEB_DAV_CONFIG && \
     touch $WEB_DAV_PASSWORD_FILE && \
     chmod 0755 $WEB_DAV_CONFIG && \
     chmod 0755 $WEB_DAV_LOCK_PATH
+
+RUN sed -i 's/<VirtualHost _default_:8443>/<VirtualHost _default_:8443>\r\nDocumentRoot $COS_MOUNT\/\r\n\t/g' /etc/httpd/conf.d/ssl.conf
 	
 # temporary as this should be a pvc volume instead
 RUN mkdir -p $COS_MOUNT && \
