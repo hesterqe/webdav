@@ -20,15 +20,15 @@ RUN mkdir -p /tmp/src && \
 RUN /usr/libexec/s2i/assemble
 
 # create supplemental ssl configuration as SSL_CONFIG
-RUN echo "SSLEngine on" >> $SSL_CONFIG && \
-    echo "SSLCipherSuite ALL:+TLSv1.2" >> $SSL_CONFIG && \
-    echo "SSLCertificateFile $SSL_CERT_FILE" >> $SSL_CONFIG && \
-    echo "SSLCertificateKeyFile $SSL_KEY_FILE" >> $SSL_CONFIG && \
-    echo "SSLProxyEngine On" >> $SSL_CONFIG && \
-    echo "SSLProxyVerify none" >> $SSL_CONFIG && \
-    echo "SSLProxyCheckPeerName off" >> $SSL_CONFIG && \
-    echo "SSLProxyCheckPeerCN off" >> $SSL_CONFIG && \
-    echo "SSLProxyCheckPeerExpire off" >> $SSL_CONFIG && \
+RUN echo "#SSLEngine on" >> $SSL_CONFIG && \
+    echo "#SSLCipherSuite ALL:+TLSv1.2" >> $SSL_CONFIG && \
+    echo "#SSLCertificateFile $SSL_CERT_FILE" >> $SSL_CONFIG && \
+    echo "#SSLCertificateKeyFile $SSL_KEY_FILE" >> $SSL_CONFIG && \
+    echo "#SSLProxyEngine On" >> $SSL_CONFIG && \
+    echo "#SSLProxyVerify none" >> $SSL_CONFIG && \
+    echo "#SSLProxyCheckPeerName off" >> $SSL_CONFIG && \
+    echo "#SSLProxyCheckPeerCN off" >> $SSL_CONFIG && \
+    echo "#SSLProxyCheckPeerExpire off" >> $SSL_CONFIG && \
 #   echo "SSLProxyCACertificateFile $SSL_CA_FILE" >> $SSL_CONFIG && \
     chmod 0755 $SSL_CONFIG && \
 # create supplemental webdav configuration as WEB_DAV_CONFIG
