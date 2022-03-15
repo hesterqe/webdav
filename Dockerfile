@@ -9,7 +9,7 @@ ARG WEB_DAV_PASSWORD_FILE=/etc/httpd/.htpasswd
 # DavLockDB may need to be made a shared volume with other apache instances
 USER 0
 
-RUN mkdir -p /tmp/src && \ mkdir -p /tmp/src/httpd-cfg && \
+RUN mkdir -p /tmp/src && mkdir -p /tmp/src/httpd-cfg && \
     mkdir -p WEB_DAV_CONFIG && \
 # create supplemental webdav configuration as WEB_DAV_CONFIG
     echo "DavLockDB $WEB_DAV_LOCK_PATH/DavLock" >> $WEB_DAV_CONFIG && \
