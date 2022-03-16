@@ -37,7 +37,7 @@ RUN mkdir -p $COS_MOUNT && \
     chmod -R 0755 $COS_MOUNT    
 # temporary as this should should be controlled via LDAP or AzureAD
 RUN htpasswd -bc /etc/httpd/.htpasswd dev abc123 && \
-    chmod -R 777 /etc/httpd/conf.d/ && /etc/httpd/conf/
+    chmod -R 777 /etc/httpd/conf.d/ /etc/httpd/conf/
     
 USER 1001
 
